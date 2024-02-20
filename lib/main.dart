@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hungerhub/home.dart';
-import 'package:hungerhub/registrationpage.dart';
 
 void main() {
   runApp(const MyApp());

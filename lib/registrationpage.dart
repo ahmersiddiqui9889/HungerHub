@@ -133,18 +133,33 @@ class MyFormState extends State<RegistrationPage> {
               )
             ),
           ),
+          
+          const SizedBox(height: 10.0),
+          
+          ElevatedButton(
+            onPressed: () {
+              _myFormKey.currentState?.validate();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.orange,
+              elevation: 3.0,
+            ),
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Register", style: TextStyle(fontSize: 18.0, color: Colors.white)),
+                SizedBox(width: 10.0),
+                Icon(
+                  Icons.app_registration,
+                  color: Colors.white
+                  ),
+              ],),
+          )
 
-
-              ],
-            )
-        )
-    ),
-    floatingActionButton: FloatingActionButton(
-      child: const Icon(Icons.done),
-      onPressed: () {
-        _myFormKey.currentState?.validate();
-      }
+        ],
       )
+    )
+  ),
   );
   }
 }
