@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hungerhub/donate.dart';
 import 'package:hungerhub/src/features/authentication/models/food_model.dart';
 import 'package:hungerhub/src/repository/user_repository/food_repository.dart';
 
@@ -136,6 +137,10 @@ class MyFormState extends State<CreateFood> {
 
       createFood(food);
 
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const DonatePage())
+      );
     },
     child: const Icon(Icons.done_outlined),
     )

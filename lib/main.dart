@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hungerhub/home.dart';
+import 'package:hungerhub/donate.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'createfood.dart';
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Fredoka'),
-      home: CreateFood(),
+      home: const DonatePage(),
     );
   }
 }
