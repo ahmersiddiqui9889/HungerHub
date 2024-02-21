@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hungerhub/donate.dart';
-import 'package:hungerhub/src/features/authentication/models/food_model.dart';
-import 'package:hungerhub/src/repository/user_repository/food_repository.dart';
+import 'package:hungerhub/backends/food_model.dart';
+import 'package:hungerhub/backends/food_repository.dart';
 
 
 class CreateFood extends StatefulWidget {
