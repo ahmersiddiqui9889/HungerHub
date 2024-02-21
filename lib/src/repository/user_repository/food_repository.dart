@@ -6,19 +6,14 @@ import 'package:hungerhub/src/features/authentication/models/food_model.dart';
 class FoodRepository extends GetxController {
   static FoodRepository get instance => Get.find();
 
-  final _db = FirebaseFirestore.instance;
+  final _db = FirebaseFirestore.instance.collection('foods');
 
   createFood(FoodModel food) async {
-    await _db.collection("foods").add(food.toJson())
-    .whenComplete(() => Get.snackbar(
-      "Success", "Food has been created", 
-      snackPosition: SnackPosition.BOTTOM, 
-      backgroundColor: Colors.green))
+    print("in createfood");
+    await _db.add(food.toJson())
+    .whenComplete(() { print("Creating food to database"); } )
     .catchError((error, stackTrace) {
-      Get.snackbar("Error", "Something went wrong. Try again",
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.redAccent,
-      colorText: Colors.red);
+    print("Error Occurred");
     print(error.toString());
     });
   }

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hungerhub/src/features/authentication/models/food_model.dart';
+import 'package:hungerhub/src/repository/user_repository/food_repository.dart';
+
 
 class CreateFood extends StatefulWidget {
   @override
@@ -13,6 +17,13 @@ class MyFormState extends State<CreateFood> {
   var productionDate = TextEditingController();
   var expiryDate = TextEditingController();
   var quantity = TextEditingController();
+  final foodRepo = Get.put(FoodRepository());
+
+  Future<void> createFood(FoodModel food) async {
+    print("in create food");
+    await foodRepo.createFood(food);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,6 +127,15 @@ class MyFormState extends State<CreateFood> {
     onPressed: () {
       // Add your action here
       _myFormKey.currentState?.validate();
+      FoodModel food = FoodModel(
+        foodName: foodName.text.trim(),
+        produced: productionDate.text.trim(),
+        expiry: expiryDate.text.trim(),
+        quantity: quantity.text.trim(),
+      );
+
+      createFood(food);
+
     },
     child: const Icon(Icons.done_outlined),
     )
