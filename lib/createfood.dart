@@ -73,7 +73,7 @@ class MyFormState extends State<CreateFood> {
                 },
                 decoration: InputDecoration(
                   labelText: "Production Date",
-                  hintText: "YYYY-MM-DD",
+                  hintText: "DD-MM-YYYY",
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
                 ),
               )
@@ -137,10 +137,14 @@ class MyFormState extends State<CreateFood> {
 
       createFood(food);
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const DonatePage())
-      );
+      setState(() {
+        foodName.clear();
+        productionDate.clear();
+        expiryDate.clear();
+        quantity.clear();
+      }
+    );
+
     },
     child: const Icon(Icons.done_outlined),
     )

@@ -10,7 +10,7 @@ class FoodRepository extends GetxController {
   createFood(FoodModel food) async {
     print("in createfood");
     await _db.add(food.toJson())
-    .whenComplete(() { print("Creating food to database"); } )
+    .whenComplete(() { print("Created food to database"); } )
     .catchError((error, stackTrace) {
     print("Error Occurred");
     print(error.toString());
