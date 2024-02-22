@@ -1,9 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hungerhub/donate.dart';
 import 'package:hungerhub/backends/food_model.dart';
 import 'package:hungerhub/backends/food_repository.dart';
-
+import 'package:hungerhub/utils.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CreateFood extends StatefulWidget {
   @override
@@ -19,6 +21,16 @@ class MyFormState extends State<CreateFood> {
   var expiryDate = TextEditingController();
   var quantity = TextEditingController();
   final foodRepo = Get.put(FoodRepository());
+
+
+  Uint8List? _image;
+  void selectImage() async {
+    Uint8List img = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = img;
+    });
+  }
+
 
   Future<void> createFood(FoodModel food) async {
     print("in create food");
@@ -39,6 +51,33 @@ class MyFormState extends State<CreateFood> {
         key: _myFormKey,
         child: Column(
             children: <Widget>[
+              // Add Photo
+              Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Stack(
+                  children: [
+
+                    _image != null
+                      ? CircleAvatar(
+                        radius: 80,
+                        backgroundImage: MemoryImage(_image!),
+                      )
+                    
+                      : CircleAvatar(
+                        radius: 80,
+                        backgroundImage: AssetImage('assets/food.png')
+                      ),
+                      Positioned(
+                        child: IconButton(
+                          onPressed: selectImage,
+                          icon: const Icon(Icons.add_a_photo),
+                        ),
+                        bottom: -10,
+                        left: 120
+                      )
+                  ]
+                )
+              ),
 
               // Food Name
               Padding(
