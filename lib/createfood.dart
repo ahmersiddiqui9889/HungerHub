@@ -127,7 +127,7 @@ class MyFormState extends State<CreateFood> {
     floatingActionButton: FloatingActionButton(
     onPressed: () {
       // Add your action here
-      _myFormKey.currentState?.validate();
+      if(_myFormKey.currentState!.validate()){
       FoodModel food = FoodModel(
         foodName: foodName.text.trim(),
         produced: productionDate.text.trim(),
@@ -143,7 +143,7 @@ class MyFormState extends State<CreateFood> {
         expiryDate.clear();
         quantity.clear();
       }
-    );
+    );}
 
     },
     child: const Icon(Icons.done_outlined),

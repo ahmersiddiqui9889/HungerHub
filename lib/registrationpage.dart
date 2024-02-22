@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hungerhub/main.dart';
 
 class RegistrationPage extends StatefulWidget {
   @override
@@ -138,8 +139,9 @@ class MyFormState extends State<RegistrationPage> {
           
           ElevatedButton(
             onPressed: () {
-              _myFormKey.currentState?.validate();
-            },
+              if (_myFormKey.currentState!.validate()) {
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyHomePage()));
+            }},
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.orange,
               elevation: 3.0,
