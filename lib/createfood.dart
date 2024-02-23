@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hungerhub/backends/food_model.dart';
@@ -15,15 +14,15 @@ class CreateFood extends StatefulWidget {
 }
 
 class MyFormState extends State<CreateFood> {
-  var _myFormKey = GlobalKey<FormState>();
+  final _myFormKey = GlobalKey<FormState>();
   var foodName = TextEditingController();
   var productionDate = TextEditingController();
   var expiryDate = TextEditingController();
   var quantity = TextEditingController();
+  String? imgUrl;
+  Uint8List? _image;
   final foodRepo = Get.put(FoodRepository());
 
-
-  Uint8List? _image;
   void selectImage() async {
     Uint8List img = await pickImage(ImageSource.gallery);
     setState(() {
@@ -32,9 +31,40 @@ class MyFormState extends State<CreateFood> {
   }
 
 
-  Future<void> createFood(FoodModel food) async {
-    print("in create food");
-    await foodRepo.createFood(food);
+
+
+  Future<void>uploadFoodData() async {
+
+    if(_image != null) {
+      imgUrl = await foodRepo.uploadImageToStorage("image", _image); }
+    print("image uploaded with url : $imgUrl");
+    if(_myFormKey.currentState!.validate()){
+      FoodModel food = FoodModel(
+        imageUrl: imgUrl?.trim() ?? '',
+        foodName: foodName.text.trim(),
+        produced: productionDate.text.trim(),
+        expiry: expiryDate.text.trim(),
+        quantity: quantity.text.trim(),
+      );
+
+      await foodRepo.uploadFoodToFirebase(food);
+        ScaffoldMessenger.of(context).showSnackBar(
+         SnackBar(
+        content: Text('Food data uploaded successfully'),
+        duration: Duration(seconds: 2),
+      ),
+    );
+
+      setState(() {
+
+        foodName.clear();
+        productionDate.clear();
+        expiryDate.clear();
+        quantity.clear();
+        _image = null;
+        }
+      );
+    }
   }
 
   @override
@@ -56,24 +86,23 @@ class MyFormState extends State<CreateFood> {
                 padding: EdgeInsets.all(20.0),
                 child: Stack(
                   children: [
-
                     _image != null
                       ? CircleAvatar(
                         radius: 80,
                         backgroundImage: MemoryImage(_image!),
                       )
-                    
-                      : CircleAvatar(
+                      : const CircleAvatar(
                         radius: 80,
                         backgroundImage: AssetImage('assets/food.png')
                       ),
+
                       Positioned(
+                        bottom: -10,
+                        left: 120,
                         child: IconButton(
                           onPressed: selectImage,
                           icon: const Icon(Icons.add_a_photo),
                         ),
-                        bottom: -10,
-                        left: 120
                       )
                   ]
                 )
@@ -166,23 +195,9 @@ class MyFormState extends State<CreateFood> {
     floatingActionButton: FloatingActionButton(
     onPressed: () {
       // Add your action here
-      if(_myFormKey.currentState!.validate()){
-      FoodModel food = FoodModel(
-        foodName: foodName.text.trim(),
-        produced: productionDate.text.trim(),
-        expiry: expiryDate.text.trim(),
-        quantity: quantity.text.trim(),
-      );
 
-      createFood(food);
+      uploadFoodData();
 
-      setState(() {
-        foodName.clear();
-        productionDate.clear();
-        expiryDate.clear();
-        quantity.clear();
-      }
-    );}
 
     },
     child: const Icon(Icons.done_outlined),

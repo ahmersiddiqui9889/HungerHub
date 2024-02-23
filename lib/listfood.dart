@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ListFood extends StatelessWidget {
-  const ListFood({Key? key}) : super(key: key);
+  const ListFood({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class ListFood extends StatelessWidget {
             if (!snapshot.hasData) {
               return const CircularProgressIndicator();
             }
-            final foods = snapshot.data?.docs.reversed.toList();
+            final foods = snapshot.data?.docs.toList();
             return Expanded(
               child: ListView.builder(
                 itemCount: foods?.length,

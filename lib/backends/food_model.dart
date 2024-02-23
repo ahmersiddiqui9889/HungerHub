@@ -1,5 +1,6 @@
 class FoodModel {
   final String? id;
+  final String imageUrl;
   final String foodName;
   final String produced;
   final String expiry;
@@ -7,6 +8,7 @@ class FoodModel {
 
   const FoodModel({
     this.id,
+    required this.imageUrl,
     required this.foodName,
     required this.produced,
     required this.expiry,
@@ -15,11 +17,11 @@ class FoodModel {
 
   toJson() {
     return{
+      "imageUrl": imageUrl,
       "foodName": foodName,
       "produced": produced,
       "expiry": expiry,
       "quantity": quantity,
     };
   }
-
 }
