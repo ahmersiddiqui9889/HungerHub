@@ -5,6 +5,7 @@ import 'package:hungerhub/backends/food_model.dart';
 import 'package:hungerhub/backends/food_repository.dart';
 import 'package:hungerhub/utils.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
 
 class CreateFood extends StatefulWidget {
   @override
@@ -22,6 +23,8 @@ class MyFormState extends State<CreateFood> {
   String? imgUrl;
   Uint8List? _image;
   final foodRepo = Get.put(FoodRepository());
+  String? customId;
+  
 
   void selectImage() async {
     Uint8List img = await pickImage(ImageSource.gallery);
@@ -34,9 +37,10 @@ class MyFormState extends State<CreateFood> {
 
 
   Future<void>uploadFoodData() async {
-
+    
+    String customId = const Uuid().v4();
     if(_image != null) {
-      imgUrl = await foodRepo.uploadImageToStorage("image", _image); }
+      imgUrl = await foodRepo.uploadImageToStorage("image", _image, customId); }
     print("image uploaded with url : $imgUrl");
     if(_myFormKey.currentState!.validate()){
       FoodModel food = FoodModel(
@@ -47,10 +51,10 @@ class MyFormState extends State<CreateFood> {
         quantity: quantity.text.trim(),
       );
 
-      await foodRepo.uploadFoodToFirebase(food);
+      await foodRepo.uploadFoodToFirebase(food, customId);
         ScaffoldMessenger.of(context).showSnackBar(
-         SnackBar(
-        content: Text('Food data uploaded successfully'),
+        const SnackBar(
+        content: Text('Food has been created successfully'),
         duration: Duration(seconds: 2),
       ),
     );
@@ -71,9 +75,9 @@ class MyFormState extends State<CreateFood> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Input Food", style: TextStyle(color: Colors.white)),
+        title: const Text("Input Food", style: TextStyle(color: Colors.white, fontSize: 24.0)),
         centerTitle: true,
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.deepPurpleAccent,
         elevation: 5.0),
         body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
@@ -83,7 +87,7 @@ class MyFormState extends State<CreateFood> {
             children: <Widget>[
               // Add Photo
               Padding(
-                padding: EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Stack(
                   children: [
                     _image != null

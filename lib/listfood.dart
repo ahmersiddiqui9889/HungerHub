@@ -26,9 +26,19 @@ class ListFood extends StatelessWidget {
                 itemCount: foods?.length,
                 itemBuilder: (context, index) {
                   final food = foods?[index];
+                  Widget leadingWidget;
+                  if(food?['imageUrl'] != '') {
+                    print("Inside image loading");
+                    leadingWidget = CircleAvatar(
+                      backgroundImage: NetworkImage(food?['imageUrl']),
+                      radius: 30,
+                    );
+                  } else {
+                    leadingWidget = const Icon(Icons.fastfood);
+                  }
                   return Card(
                     child: ListTile(
-                      leading: const Icon(Icons.fastfood),
+                      leading: leadingWidget,
                       title: Text(food?['foodName']),
                       subtitle: Text('Produced: ${food?['produced']}\nExpiry: ${food?['expiry']}\nQuantity: ${food?['quantity']}'),
                     ),

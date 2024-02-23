@@ -8,9 +8,9 @@ class DonatePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('HUNGERHUB', style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w500)),
+        title: const Text('Donate', style: TextStyle(color: Colors.white, fontSize: 26,)),
         centerTitle: true,
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.green,
         elevation: 5.0
     ),
 

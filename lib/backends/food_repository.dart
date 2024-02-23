@@ -8,26 +8,24 @@ class FoodRepository extends GetxController {
   static FoodRepository get instance => Get.find();
 
   final FirebaseStorage _storage = FirebaseStorage.instance;
-  final CollectionReference _db = FirebaseFirestore.instance.collection('foods');
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<String> uploadImageToStorage(String childName, Uint8List? file) async {
+  Future<String> uploadImageToStorage(String childName, Uint8List? file, String imageName) async {
     print("in upload image");
-    Reference ref = _storage.ref().child(childName);
+    Reference ref = _storage.ref().child(childName).child(imageName);
     UploadTask uploadTask = ref.putData(file!);
     TaskSnapshot snapshot = await uploadTask;
     String downloadUrl = await snapshot.ref.getDownloadURL();
     return downloadUrl;
   }
 
-  Future uploadFoodToFirebase(FoodModel food) async {
-    print("uploading foood");
-    await _db.add(food.toJson())
-    .whenComplete(() { print("Created food to database"); } )
-    .catchError((error, stackTrace) {
-    print("Error Occurred");
-    print(error.toString());
-    return error;
+  Future<void> uploadFoodToFirebase(FoodModel food, String customId) async {
+    print("uploading food");
+    await _firestore.runTransaction((transaction) async {
+      transaction.set(
+        _firestore.collection('foods').doc(customId),
+        food.toJson(),
+      );
     });
   }
-
 }

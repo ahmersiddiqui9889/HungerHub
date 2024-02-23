@@ -140,7 +140,12 @@ class MyFormState extends State<RegistrationPage> {
           ElevatedButton(
             onPressed: () {
               if (_myFormKey.currentState!.validate()) {
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyHomePage()));
+              ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+              content: Text('Registration successful'),
+              duration: Duration(seconds: 2),
+            ));
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyHomePage()));
             }},
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.orange,
