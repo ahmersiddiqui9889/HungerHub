@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hungerhub/main.dart';
 
 class RegistrationPage extends StatefulWidget {
+  const RegistrationPage({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return MyFormState();
@@ -9,9 +11,9 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class MyFormState extends State<RegistrationPage> {
-  var _myFormKey = GlobalKey<FormState>();
-  var _mobileNo = TextEditingController();
-  var _password = TextEditingController();
+  final _myFormKey = GlobalKey<FormState>();
+  final _mobileNo = TextEditingController();
+  final _password = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +30,7 @@ class MyFormState extends State<RegistrationPage> {
           child: Column(
             children: <Widget>[
               Padding(
-                  padding: EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: TextFormField(
                   validator: (String? msg) {
                     if(msg == null || msg.isEmpty) {
@@ -145,7 +147,7 @@ class MyFormState extends State<RegistrationPage> {
               content: Text('Registration successful'),
               duration: Duration(seconds: 2),
             ));
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyHomePage()));
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MyHomePage()));
             }},
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.orange,

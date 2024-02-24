@@ -8,6 +8,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
 class CreateFood extends StatefulWidget {
+  const CreateFood({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return MyFormState();

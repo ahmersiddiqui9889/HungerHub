@@ -14,7 +14,7 @@ import 'package:image_picker/image_picker.dart';
 class EditFoodPage extends StatefulWidget {
 
   QueryDocumentSnapshot<Object?>? food;
-  EditFoodPage(this.food);
+  EditFoodPage(this.food, {super.key});
   
   @override
   State<StatefulWidget> createState() {
@@ -102,7 +102,7 @@ class MyFormState extends State<EditFoodPage> {
     await FirebaseStorage.instance.ref().child('image/$customId').delete();
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => MyHomePage()),
+      MaterialPageRoute(builder: (context) => const MyHomePage()),
     );
 
     ScaffoldMessenger.of(context).showSnackBar(

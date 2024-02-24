@@ -22,12 +22,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Fredoka'),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -37,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final List<Widget> _children = [
     const ListFood(),
-    CreateFood(),
+    const CreateFood(),
     const DonatePage(),
   ];
 

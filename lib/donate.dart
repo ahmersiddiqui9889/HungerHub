@@ -22,9 +22,9 @@ class DonatePage extends StatelessWidget {
 
           const Text('Make a Difference with a Click', style: TextStyle(fontSize: 24.0, color: Colors.green,)),
 
-          SizedBox(height: 40,),
+          const SizedBox(height: 40,),
           
-          Container(
+          SizedBox(
           width: 300,
           height: 250,
           child: Card(
@@ -46,7 +46,7 @@ class DonatePage extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => RegistrationPage()),
+                      MaterialPageRoute(builder: (context) => const RegistrationPage()),
                     );
                   },
                 child: const Text('DONATE', style: TextStyle(color: Colors.white, fontSize: 16.0),),
