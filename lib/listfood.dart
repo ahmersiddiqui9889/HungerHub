@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hungerhub/editfood.dart';
 
 class ListFood extends StatelessWidget {
   const ListFood({super.key});
@@ -35,11 +36,23 @@ class ListFood extends StatelessWidget {
                 } else {
                   leadingWidget = const Icon(Icons.fastfood_outlined);
                 }
+                Widget trailingWidget = InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditFoodPage(food),
+                      ),
+                    );
+                  },
+                  child: const Icon(Icons.edit)
+                );
                 return Card(
                   child: ListTile(
                     leading: leadingWidget,
                     title: Text(food?['foodName']),
                     subtitle: Text('Produced: ${food?['produced']}\nExpiry: ${food?['expiry']}\nQuantity: ${food?['quantity']}'),
+                    trailing: trailingWidget,
                   ),
                 );
               },
