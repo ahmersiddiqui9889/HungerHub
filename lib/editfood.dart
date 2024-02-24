@@ -47,8 +47,6 @@ class MyFormState extends State<EditFoodPage> {
   }
 
 
-
-
   Future<void>uploadFoodData() async {
     if(_image != null) {
       imgUrl = await foodRepo.uploadImageToStorage("image", _image, customId!); }
@@ -72,7 +70,7 @@ class MyFormState extends State<EditFoodPage> {
 
     Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const ListFood()),
+        MaterialPageRoute(builder: (context) => const MyHomePage()),
       );
     }
   }
