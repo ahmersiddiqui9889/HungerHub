@@ -34,13 +34,17 @@ class MyFormState extends State<CreateFood> {
   }
 
 
-
-
   Future<void>uploadFoodData() async {
     
     String customId = const Uuid().v4();
-    if(_image != null) {
-      imgUrl = await foodRepo.uploadImageToStorage("image", _image, customId); }
+    if(_image == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+      content: Text('Please upload an Image'),
+      duration: Duration(seconds: 3),));
+      return;
+    }
+    imgUrl = await foodRepo.uploadImageToStorage("image", _image, customId);
     print("image uploaded with url : $imgUrl");
     if(_myFormKey.currentState!.validate()){
       FoodModel food = FoodModel(
@@ -55,7 +59,7 @@ class MyFormState extends State<CreateFood> {
         ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
         content: Text('Food has been created successfully'),
-        duration: Duration(seconds: 2),
+        duration: Duration(seconds: 3),
       ),
     );
 

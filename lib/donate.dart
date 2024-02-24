@@ -19,28 +19,39 @@ class DonatePage extends StatelessWidget {
         child: Column (
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+
+          const Text('Make a Difference with a Click', style: TextStyle(fontSize: 24.0, color: Colors.green,)),
+
+          SizedBox(height: 40,),
+          
           Container(
           width: 300,
           height: 250,
           child: Card(
+            color: Colors.white,
             elevation: 5,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('-: Make a Difference with a Click :-', style: TextStyle(fontSize: 16.0, color: Colors.blueAccent,)),
-                const SizedBox(height: 15),
-                const Text('Donate Now!', style: TextStyle(fontSize: 20.0, color: Colors.blueAccent,)),
-                const SizedBox(height: 15),
+                const Text('Donate Now!', style: TextStyle(fontSize: 24.0, color: Colors.blueAccent,)),
+                const SizedBox(height: 30),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightBlue,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    )
+                  ),
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => RegistrationPage()),
                     );
                   },
-                child: const Text('DONATE', style: TextStyle(color: Colors.blue, fontSize: 16.0),),
+                child: const Text('DONATE', style: TextStyle(color: Colors.white, fontSize: 16.0),),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 30),
               const Text("Your small act of kindness \ncan make a big difference.", style: TextStyle(fontSize:14, color: Colors.blueGrey)),
               ]
             ),

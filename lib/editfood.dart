@@ -1,13 +1,15 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hungerhub/backends/food_model.dart';
 import 'package:hungerhub/backends/food_repository.dart';
+import 'package:hungerhub/listfood.dart';
+import 'package:hungerhub/main.dart';
 import 'package:hungerhub/utils.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:uuid/uuid.dart';
 
 class EditFoodPage extends StatefulWidget {
 
@@ -48,9 +50,8 @@ class MyFormState extends State<EditFoodPage> {
 
 
   Future<void>uploadFoodData() async {
-    String customId = const Uuid().v4();
     if(_image != null) {
-      imgUrl = await foodRepo.uploadImageToStorage("image", _image, customId); }
+      imgUrl = await foodRepo.uploadImageToStorage("image", _image, customId!); }
     print("image uploaded with url : $imgUrl");
     if(_myFormKey.currentState!.validate()){
       FoodModel food = FoodModel(
@@ -61,22 +62,17 @@ class MyFormState extends State<EditFoodPage> {
         quantity: quantity.text.trim(),
       );
 
-      await foodRepo.uploadFoodToFirebase(food, customId);
-        ScaffoldMessenger.of(context).showSnackBar(
+      await foodRepo.uploadFoodToFirebase(food, customId!);
+      ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-        content: Text('Food has been created successfully'),
-        duration: Duration(seconds: 2),
+        content: Text('Food data has been edited successfully'),
+        duration: Duration(seconds: 3),
       ),
     );
 
-      setState(() {
-
-        foodName.clear();
-        productionDate.clear();
-        expiryDate.clear();
-        quantity.clear();
-        _image = null;
-        }
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const ListFood()),
       );
     }
   }
@@ -101,6 +97,22 @@ class MyFormState extends State<EditFoodPage> {
     }
   }
 
+  void deleteFood() async {
+    await FirebaseFirestore.instance.collection('foods').doc(customId).delete();
+    await FirebaseStorage.instance.ref().child('image/$customId').delete();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => MyHomePage()),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+      content: Text('Food data has been deleted'),
+      duration: Duration(seconds: 3),
+    )
+  );
+}
+
   void loadImagefromUrl() async {
     Uint8List? img = await getImageFromUrl(food!['imageUrl']);
     setState(() {
@@ -113,6 +125,7 @@ class MyFormState extends State<EditFoodPage> {
   @override
   void initState() {
     super.initState();
+    customId = food!.id;
     foodName = TextEditingController(text: food!['foodName']);
     productionDate = TextEditingController(text: food!['produced']);
     expiryDate = TextEditingController(text: food!['expiry']);
@@ -123,9 +136,9 @@ class MyFormState extends State<EditFoodPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Input Food", style: TextStyle(color: Colors.white, fontSize: 24.0)),
+        title: const Text("Edit Food", style: TextStyle(color: Colors.white, fontSize: 24.0)),
         centerTitle: true,
-        backgroundColor: Colors.deepPurpleAccent,
+        backgroundColor: const Color.fromARGB(255, 156, 169, 40),
         elevation: 5.0),
         body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
@@ -240,6 +253,22 @@ class MyFormState extends State<EditFoodPage> {
                 ),
               )
             ),
+
+            Padding(
+              padding: const EdgeInsets.all(35.0),
+              child: ElevatedButton(
+                onPressed: deleteFood,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  foregroundColor: Colors.white,
+                  minimumSize: const Size(120, 50)
+                ),
+                child: const Icon(
+                  Icons.delete,
+                  size: 30,
+                  ),
+              )
+            )
           ],
         )
       )
