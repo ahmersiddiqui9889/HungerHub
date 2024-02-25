@@ -65,9 +65,9 @@ class ListFood extends StatelessWidget {
                 return Card(
                   child: ListTile(
                     leading: leadingWidget,
-                    title: Text(food?['foodName']),
+                    title: Text(food?['foodName'], style: TextStyle(fontSize: 18)),
                     subtitle: Text(
-                        'Produced: ${food?['produced']}\nExpiry: ${food?['expiry']}\nQuantity: ${food?['quantity']}'),
+                        'Produced: ${food?['produced']}\nExpiry: ${food?['expiry']}\nQuantity: ${food?['quantity']}', style: TextStyle(fontSize: 13)),
                     trailing: trailingWidget,
                   ),
                 );
