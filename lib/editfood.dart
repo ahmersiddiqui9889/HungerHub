@@ -9,6 +9,7 @@ import 'package:hungerhub/backends/food_repository.dart';
 import 'package:hungerhub/main.dart';
 import 'package:hungerhub/imagepicker.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:custom_rating_bar/custom_rating_bar.dart';
 
 class EditFoodPage extends StatefulWidget {
 
@@ -31,6 +32,7 @@ class MyFormState extends State<EditFoodPage> {
   late TextEditingController productionDate;
   late TextEditingController expiryDate;
   late TextEditingController quantity;
+  double rating = 0.0;
   String? customId;
   String? imgUrl;
   Uint8List? _image;
@@ -56,6 +58,7 @@ class MyFormState extends State<EditFoodPage> {
         produced: productionDate.text.trim(),
         expiry: expiryDate.text.trim(),
         quantity: quantity.text.trim(),
+        rating: rating,
       );
 
       await foodRepo.uploadFoodToFirebase(food, customId!);
@@ -126,6 +129,7 @@ class MyFormState extends State<EditFoodPage> {
     productionDate = TextEditingController(text: food!['produced']);
     expiryDate = TextEditingController(text: food!['expiry']);
     quantity = TextEditingController(text: food!['quantity']);
+    rating = food!['rating'];
     loadImagefromUrl();
   }
   @override
@@ -138,10 +142,9 @@ class MyFormState extends State<EditFoodPage> {
         elevation: 5.0),
         body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-        child: Form(
-        key: _myFormKey,
         child: Column(
-            children: <Widget>[
+
+          children: [
               // Add Photo
               Padding(
                 padding: const EdgeInsets.all(20.0),
@@ -169,105 +172,146 @@ class MyFormState extends State<EditFoodPage> {
                 )
               ),
 
-              // Food Name
+            Form(
+            key: _myFormKey,
+            child: Column(
+                children: <Widget>[
+            
+                  // Food Name
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: TextFormField(
+                    controller: foodName,
+                    validator: (String? name) {
+                      if(name == null || name.isEmpty) {
+                        return "Please Enter Food Name";
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      labelText: "Food Name",
+                      hintText: "Enter food name",
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+                    ),
+                  )
+                ),
+            
+                  // Production Date
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: TextFormField(
+                    controller: productionDate,
+                    keyboardType: TextInputType.phone,
+                    validator: (String? date) {
+                      if(date == null || date.isEmpty) {
+                        return "Please Enter Production Date";
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      labelText: "Production Date",
+                      hintText: "DD-MM-YYYY",
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+                    ),
+                  )
+                ),
+            
+            
+                  // Expiry Date
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: TextFormField(
+                    controller: expiryDate,
+                    keyboardType: TextInputType.phone,
+                    validator: (String? date) {
+                      if(date == null || date.isEmpty) {
+                        return "Please Enter Expiry Date";
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      labelText: "Date of Expiry",
+                      hintText: "YYYY-MM-DD",
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+                    ),
+                  )
+                ),
+            
+            
+                  // Quantity
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: TextFormField(
+                    controller: quantity,
+                    keyboardType: TextInputType.number,
+                    validator: (String? weight) {
+                      if(weight == null || weight.isEmpty) {
+                        return "Please Enter Food Weight";
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      labelText: "Quantity",
+                      hintText: "in Kgs",
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+                    ),
+                  )
+                ),
+
               Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: TextFormField(
-                controller: foodName,
-                validator: (String? name) {
-                  if(name == null || name.isEmpty) {
-                    return "Please Enter Food Name";
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  labelText: "Food Name",
-                  hintText: "Enter food name",
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    RatingBar(
+                      filledIcon: Icons.star, 
+                      emptyIcon: Icons.star_border, 
+                      initialRating: rating,
+                      maxRating: 5,
+                      onRatingChanged: (value) {
+                        print('$value');
+                        setState(() {
+                          rating = value;
+                        });
+                      }),
+                  ],
                 ),
-              )
-            ),
-
-              // Production Date
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: TextFormField(
-                controller: productionDate,
-                keyboardType: TextInputType.phone,
-                validator: (String? date) {
-                  if(date == null || date.isEmpty) {
-                    return "Please Enter Production Date";
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  labelText: "Production Date",
-                  hintText: "DD-MM-YYYY",
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+              ),
+            
+              // Rating Text
+              Text(
+                rating == 0? "Rate Quality"
+                : rating == 1? "Very Poor"
+                : rating == 2? "Poor"
+                : rating == 3? "Good"
+                : rating == 4? "Very Good"
+                : rating == 5? "Excellent"
+                : "Error Occurred",
+                style: const TextStyle(fontSize: 20, color: Color.fromARGB(255, 86, 47, 194))
+              ),
+            
+                Padding(
+                  padding: const EdgeInsets.all(25.0),
+                  child: ElevatedButton(
+                    onPressed: deleteFood,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      foregroundColor: Colors.white,
+                      minimumSize: const Size(120, 50)
+                    ),
+                    child: const Icon(
+                      Icons.delete,
+                      size: 30,
+                      ),
+                  )
                 ),
-              )
-            ),
+                          // Rating Bar
 
-
-              // Expiry Date
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: TextFormField(
-                controller: expiryDate,
-                keyboardType: TextInputType.phone,
-                validator: (String? date) {
-                  if(date == null || date.isEmpty) {
-                    return "Please Enter Expiry Date";
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  labelText: "Date of Expiry",
-                  hintText: "YYYY-MM-DD",
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-                ),
-              )
-            ),
-
-
-              // Quantity
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: TextFormField(
-                controller: quantity,
-                keyboardType: TextInputType.number,
-                validator: (String? weight) {
-                  if(weight == null || weight.isEmpty) {
-                    return "Please Enter Food Weight";
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  labelText: "Quantity",
-                  hintText: "in Kgs",
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-                ),
-              )
-            ),
-
-            Padding(
-              padding: const EdgeInsets.all(35.0),
-              child: ElevatedButton(
-                onPressed: deleteFood,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  foregroundColor: Colors.white,
-                  minimumSize: const Size(120, 50)
-                ),
-                child: const Icon(
-                  Icons.delete,
-                  size: 30,
-                  ),
-              )
+              ],
             )
+          ),
           ],
         )
-      )
     ),
     floatingActionButton: FloatingActionButton(
     onPressed: () {

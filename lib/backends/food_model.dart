@@ -5,6 +5,7 @@ class FoodModel {
   final String produced;
   final String expiry;
   final String quantity;
+  final double rating;
 
   const FoodModel({
     this.id,
@@ -13,6 +14,7 @@ class FoodModel {
     required this.produced,
     required this.expiry,
     required this.quantity,
+    required this.rating,
   });
 
   toJson() {
@@ -22,6 +24,7 @@ class FoodModel {
       "produced": produced,
       "expiry": expiry,
       "quantity": quantity,
+      "rating": rating,
     };
   }
 }
