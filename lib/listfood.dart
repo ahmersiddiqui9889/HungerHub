@@ -43,10 +43,10 @@ class ListFood extends StatelessWidget {
                     RatingBar.readOnly(
                       filledIcon: Icons.star,
                       emptyIcon: Icons.star_border,
-                      initialRating: food!['rating'],
-                      size: 20,
+                      initialRating: food!['rating'].toDouble(),
+                      size: 20.0,
                     ),
-                    const SizedBox(width: 15,),
+                    const SizedBox(width: 15.0,),
                     InkWell(
                       onTap: () {
                         Navigator.push(

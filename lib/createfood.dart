@@ -223,7 +223,7 @@ class MyFormState extends State<CreateFood> {
                   onRatingChanged: (value) {
                     print('$value');
                     setState(() {
-                      rating = value;
+                      rating = value.toDouble();
                     });
                   }),
               ],

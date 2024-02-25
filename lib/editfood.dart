@@ -97,6 +97,7 @@ class MyFormState extends State<EditFoodPage> {
   }
 
   void deleteFood() async {
+
     await FirebaseFirestore.instance.collection('foods').doc(customId).delete();
     await FirebaseStorage.instance.ref().child('image/$customId').delete();
     Navigator.pushReplacement(
@@ -267,7 +268,7 @@ class MyFormState extends State<EditFoodPage> {
                     RatingBar(
                       filledIcon: Icons.star, 
                       emptyIcon: Icons.star_border, 
-                      initialRating: rating,
+                      initialRating: rating.toDouble(),
                       maxRating: 5,
                       onRatingChanged: (value) {
                         print('$value');
