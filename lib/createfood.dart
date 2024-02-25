@@ -64,21 +64,18 @@ class MyFormState extends State<CreateFood> {
         );
 
       await foodRepo.uploadFoodToFirebase(food, customId);
-        ScaffoldMessenger.of(context).showSnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
         content: Text('Food has been created successfully'),
         duration: Duration(seconds: 3),
-      ),
+        ),
     );
 
-      setState(() {
-        foodName.clear();
-        productionDate.clear();
-        expiryDate.clear();
-        quantity.clear();
-        _image = null;
-        }
-      );
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const MyHomePage()
+        ));      
     }
   }
 
@@ -249,12 +246,7 @@ class MyFormState extends State<CreateFood> {
       // Add your action here
 
       await uploadFoodData();
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const MyHomePage()
-          ));
-
+      
     },
     child: const Icon(Icons.done_outlined),
     )
