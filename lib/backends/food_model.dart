@@ -18,7 +18,7 @@ class FoodModel {
   });
 
   toJson() {
-    return{
+    return {
       "imageUrl": imageUrl,
       "foodName": foodName,
       "produced": produced,

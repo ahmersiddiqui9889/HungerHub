@@ -10,7 +10,8 @@ class FoodRepository extends GetxController {
   final FirebaseStorage _storage = FirebaseStorage.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<String> uploadImageToStorage(String childName, Uint8List? file, String imageName) async {
+  Future<String> uploadImageToStorage(
+      String childName, Uint8List? file, String imageName) async {
     print("in upload image");
     Reference ref = _storage.ref().child(childName).child(imageName);
     UploadTask uploadTask = ref.putData(file!);

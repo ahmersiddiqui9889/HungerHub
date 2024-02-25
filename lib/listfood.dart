@@ -10,7 +10,8 @@ class ListFood extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Food Items", style: TextStyle(fontSize: 24, color: Colors.white)),
+        title: const Text("Food Items",
+            style: TextStyle(fontSize: 24, color: Colors.white)),
         backgroundColor: Colors.blue,
         centerTitle: true,
         elevation: 5.0,
@@ -28,7 +29,7 @@ class ListFood extends StatelessWidget {
               itemBuilder: (context, index) {
                 final food = foods?[index];
                 Widget leadingWidget;
-                if(food?['imageUrl'] != '') {
+                if (food?['imageUrl'] != '') {
                   print("Inside image loading");
                   leadingWidget = CircleAvatar(
                     backgroundImage: NetworkImage(food?['imageUrl']),
@@ -46,25 +47,27 @@ class ListFood extends StatelessWidget {
                       initialRating: food!['rating'].toDouble(),
                       size: 20.0,
                     ),
-                    const SizedBox(width: 15.0,),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => EditFoodPage(food),
-                          ),
-                        );
-                      },
-                      child: const Icon(Icons.edit)
+                    const SizedBox(
+                      width: 15.0,
                     ),
+                    InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditFoodPage(food),
+                            ),
+                          );
+                        },
+                        child: const Icon(Icons.edit)),
                   ],
                 );
                 return Card(
                   child: ListTile(
                     leading: leadingWidget,
                     title: Text(food?['foodName']),
-                    subtitle: Text('Produced: ${food?['produced']}\nExpiry: ${food?['expiry']}\nQuantity: ${food?['quantity']}'),
+                    subtitle: Text(
+                        'Produced: ${food?['produced']}\nExpiry: ${food?['expiry']}\nQuantity: ${food?['quantity']}'),
                     trailing: trailingWidget,
                   ),
                 );
