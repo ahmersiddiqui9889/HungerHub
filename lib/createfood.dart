@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:hungerhub/backends/food_model.dart';
 import 'package:hungerhub/backends/food_repository.dart';
 import 'package:hungerhub/imagepicker.dart';
+import 'package:hungerhub/main.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
@@ -244,10 +245,15 @@ class MyFormState extends State<CreateFood> {
         )
     ),
     floatingActionButton: FloatingActionButton(
-    onPressed: () {
+    onPressed: () async{
       // Add your action here
 
-      uploadFoodData();
+      await uploadFoodData();
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const MyHomePage()
+          ));
 
     },
     child: const Icon(Icons.done_outlined),

@@ -258,6 +258,7 @@ class MyFormState extends State<EditFoodPage> {
                   )
                 ),
 
+              // Rating Bar
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
@@ -290,22 +291,23 @@ class MyFormState extends State<EditFoodPage> {
                 style: const TextStyle(fontSize: 20, color: Color.fromARGB(255, 86, 47, 194))
               ),
             
-                Padding(
-                  padding: const EdgeInsets.all(25.0),
-                  child: ElevatedButton(
-                    onPressed: deleteFood,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                      foregroundColor: Colors.white,
-                      minimumSize: const Size(120, 50)
+
+              // Button
+              Padding(
+                padding: const EdgeInsets.all(25.0),
+                child: ElevatedButton(
+                  onPressed: deleteFood,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    foregroundColor: Colors.white,
+                    minimumSize: const Size(120, 50)
+                  ),
+                  child: const Icon(
+                    Icons.delete,
+                    size: 30,
                     ),
-                    child: const Icon(
-                      Icons.delete,
-                      size: 30,
-                      ),
                   )
                 ),
-                          // Rating Bar
 
               ],
             )
