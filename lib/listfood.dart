@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hungerhub/editfood.dart';
+import 'package:custom_rating_bar/custom_rating_bar.dart';
 
 class ListFood extends StatelessWidget {
   const ListFood({super.key});
@@ -36,16 +37,28 @@ class ListFood extends StatelessWidget {
                 } else {
                   leadingWidget = const Icon(Icons.fastfood_outlined);
                 }
-                Widget trailingWidget = InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EditFoodPage(food),
-                      ),
-                    );
-                  },
-                  child: const Icon(Icons.edit)
+                Widget trailingWidget = Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    RatingBar.readOnly(
+                      filledIcon: Icons.star,
+                      emptyIcon: Icons.star_border,
+                      initialRating: food!['rating'],
+                      size: 20,
+                    ),
+                    const SizedBox(width: 15,),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditFoodPage(food),
+                          ),
+                        );
+                      },
+                      child: const Icon(Icons.edit)
+                    ),
+                  ],
                 );
                 return Card(
                   child: ListTile(
