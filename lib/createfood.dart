@@ -68,7 +68,7 @@ class MyFormState extends State<CreateFood> {
         ),
       );
 
-      Navigator.pushReplacement(
+      await Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const MyHomePage()));
     }
   }

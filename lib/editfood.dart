@@ -65,11 +65,8 @@ class MyFormState extends State<EditFoodPage> {
           duration: Duration(seconds: 3),
         ),
       );
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const MyHomePage()),
-      );
+      await Future.delayed(const Duration(seconds: 2));
+      Navigator.pop(context);
     }
   }
 
@@ -97,15 +94,13 @@ class MyFormState extends State<EditFoodPage> {
   void deleteFood() async {
     await FirebaseFirestore.instance.collection('foods').doc(customId).delete();
     await FirebaseStorage.instance.ref().child('image/$customId').delete();
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const MyHomePage()),
-    );
 
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text('Food data has been deleted'),
       duration: Duration(seconds: 3),
     ));
+    await Future.delayed(const Duration(seconds: 1));
+    Navigator.pop(context);
   }
 
   void loadImagefromUrl() async {

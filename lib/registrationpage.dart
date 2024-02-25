@@ -145,6 +145,7 @@ class MyFormState extends State<RegistrationPage> {
                               content: Text('Registration successful'),
                               duration: Duration(seconds: 2),
                             ));
+                            Navigator.pop(context);
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
