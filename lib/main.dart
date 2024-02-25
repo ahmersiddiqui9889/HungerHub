@@ -4,6 +4,7 @@ import 'firebase_options.dart';
 import 'package:hungerhub/listfood.dart';
 import 'package:hungerhub/createfood.dart';
 import 'package:hungerhub/donate.dart';
+import 'package:custom_rating_bar/custom_rating_bar.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

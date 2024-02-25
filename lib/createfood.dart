@@ -1,9 +1,10 @@
 import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hungerhub/backends/food_model.dart';
 import 'package:hungerhub/backends/food_repository.dart';
-import 'package:hungerhub/utils.dart';
+import 'package:hungerhub/imagepicker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
@@ -46,8 +47,7 @@ class MyFormState extends State<CreateFood> {
       duration: Duration(seconds: 3),));
       return;
     }
-    imgUrl = await foodRepo.uploadImageToStorage("image", _image, customId);
-    print("image uploaded with url : $imgUrl");
+    print("this is outside imagecheck");
     if(_myFormKey.currentState!.validate()){
       FoodModel food = FoodModel(
         imageUrl: imgUrl?.trim() ?? '',
@@ -56,6 +56,8 @@ class MyFormState extends State<CreateFood> {
         expiry: expiryDate.text.trim(),
         quantity: quantity.text.trim(),
       );
+      imgUrl = await foodRepo.uploadImageToStorage("image", _image, customId);
+      print("image uploaded with url : $imgUrl");
 
       await foodRepo.uploadFoodToFirebase(food, customId);
         ScaffoldMessenger.of(context).showSnackBar(
@@ -66,7 +68,6 @@ class MyFormState extends State<CreateFood> {
     );
 
       setState(() {
-
         foodName.clear();
         productionDate.clear();
         expiryDate.clear();
@@ -207,7 +208,6 @@ class MyFormState extends State<CreateFood> {
       // Add your action here
 
       uploadFoodData();
-
 
     },
     child: const Icon(Icons.done_outlined),

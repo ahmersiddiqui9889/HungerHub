@@ -6,9 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hungerhub/backends/food_model.dart';
 import 'package:hungerhub/backends/food_repository.dart';
-import 'package:hungerhub/listfood.dart';
 import 'package:hungerhub/main.dart';
-import 'package:hungerhub/utils.dart';
+import 'package:hungerhub/imagepicker.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditFoodPage extends StatefulWidget {
@@ -45,7 +44,6 @@ class MyFormState extends State<EditFoodPage> {
       _image = img;
     });
   }
-
 
   Future<void>uploadFoodData() async {
     if(_image != null) {
